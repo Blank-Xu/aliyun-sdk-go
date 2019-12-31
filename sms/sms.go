@@ -124,7 +124,8 @@ func (p *Option) SendBatchSms(phones, signNames []string, templateCode string, t
 	phoneNumbers := make([]string, 0, nums)
 	for _, phone := range phones {
 		l := len(phone)
-		if l > 3 && phone[:3] == "+86" {
+		if l == 14 && phone[:3] == "+86" {
+			// for chinese phone number
 			phoneNumbers = append(phoneNumbers, phone[3:])
 		} else if l > 0 && phone[:1] == "+" {
 			phoneNumbers = append(phoneNumbers, phone[1:])
