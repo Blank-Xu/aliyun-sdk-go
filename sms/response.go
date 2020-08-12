@@ -4,15 +4,16 @@ import (
 	"fmt"
 )
 
-// Response of sms request.
+// Response  for sms request.
 type Response struct {
 	Code      string `json:"Code"`
 	Message   string `json:"Message"`
-	RequestId string `json:"RequestId"`
-	BizId     string `json:"BizId"`
+	RequestID string `json:"RequestId"`
+	BizID     string `json:"BizId"`
 }
 
-func (p *Response) CheckError() error {
+// Error  .
+func (p Response) Error() error {
 	if p.Code != "OK" {
 		return fmt.Errorf("send sms failed, code: %s, message: %s", p.Code, p.Message)
 	}

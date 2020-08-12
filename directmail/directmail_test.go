@@ -5,22 +5,27 @@ import (
 )
 
 const (
-	tHost         = ""
-	tAccessKeyId  = ""
-	tAccessSecret = ""
-	tRegionId     = ""
-	tVersion      = ""
-	tAccountName  = ""
-	tFromAlias    = ""
+	host         = ""
+	accessKeyID  = ""
+	accessSecret = ""
+	regionID     = ""
+	version      = ""
+	accountName  = ""
+
+	fromAlias = ""
+
+	receiversName = ""
+	templateName  = ""
+	tagName       = ""
 )
 
 var (
-	tApi = NewApi(tHost, tAccessKeyId, tAccessSecret, tRegionId, tVersion, tAccountName, tFromAlias)
+	api = NewAPI(host, accessKeyID, accessSecret, regionID, version, accountName, fromAlias)
 
-	tEmails   = []string{"test@example.com"}
-	tSubject  = "ali email test"
-	tTextBody = "text body"
-	tHtmlBody = `<!DOCTYPE html>
+	emails   = []string{"test@example.com"}
+	subject  = "Aliyun directmail test"
+	textBody = "text body"
+	htmlBody = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,8 +38,8 @@ html body
 )
 
 func TestSingleSendMail(t *testing.T) {
-	code, resp, err := tApi.SingleSendMail(tEmails, tSubject, tHtmlBody, tTextBody)
-	if err != nil || code >= 300 {
+	code, resp, err := api.SingleSendMail(emails, subject, htmlBody, textBody)
+	if err != nil || code != 200 {
 		t.Fatalf("send failed, code: %d, resp: %s, err: %v", code, resp, err)
 	}
 
@@ -42,5 +47,10 @@ func TestSingleSendMail(t *testing.T) {
 }
 
 func TestBatchSendMail(t *testing.T) {
-	// TODO:
+	code, resp, err := api.BatchSendMail(receiversName, templateName, tagName)
+	if err != nil || code != 200 {
+		t.Fatalf("send failed, code: %d, resp: %s, err: %v", code, resp, err)
+	}
+
+	t.Logf("send success, resp: %s", resp)
 }

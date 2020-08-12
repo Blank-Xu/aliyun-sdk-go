@@ -1,3 +1,3 @@
-module github.com/Blank-Xu/aliyunsdk
+module github.com/Blank-Xu/aliyun-sdk-go
 
-go 1.12
+go 1.11

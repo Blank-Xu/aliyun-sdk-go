@@ -5,32 +5,33 @@ import (
 )
 
 const (
-	tHost         = ""
-	tAccessKeyId  = ""
-	tAccessSecret = ""
-	tRegionId     = ""
-	tSignName     = ""
-	tVersion      = ""
+	host         = ""
+	accessKeyID  = ""
+	accessSecret = ""
+	regionID     = ""
+	version      = ""
+
+	signName      = ""
+	templateCode  = ""
+	templateParam = ``
 )
 
 var (
-	tApi = NewApi(tHost, tAccessKeyId, tAccessSecret, tRegionId, tSignName, tVersion)
+	api = NewAPI(host, accessKeyID, accessSecret, regionID, version)
 
-	tPhones       = []string{"+8615900000000"}
-	tTemplateCode = ""
+	phones = []string{"+8615900000000"}
 
-	tTemplateParam = ``
-
-	tSignNames      = []string{"ali sms test"}
-	tTemplateParams = []string{``}
+	signNames      = []string{""}
+	templateParams = []string{``}
 )
 
 func TestSendSms(t *testing.T) {
-	resp, err := tApi.SendSms(tPhones, tTemplateCode, tTemplateParam)
+	resp, err := api.SendSms(phones, signName, templateCode, templateParam)
 	if err != nil {
-		t.Fatalf("send failed, resp: %s, err: %v", resp, err)
+		t.Fatalf("send failed, resp: %+v, err: %v", resp, err)
 	}
-	if err = resp.CheckError(); err != nil {
+
+	if err = resp.Error(); err != nil {
 		t.Fatalf("send failed, resp: %s, err: %v", resp, err)
 	}
 
@@ -38,11 +39,12 @@ func TestSendSms(t *testing.T) {
 }
 
 func TestSendBatchSms(t *testing.T) {
-	resp, err := tApi.SendBatchSms(tPhones, tSignNames, tTemplateCode, tTemplateParams)
+	resp, err := api.SendBatchSms(phones, signNames, templateCode, templateParams)
 	if err != nil {
 		t.Fatalf("send failed, resp: %s, err: %v", resp, err)
 	}
-	if err = resp.CheckError(); err != nil {
+
+	if err = resp.Error(); err != nil {
 		t.Fatalf("send failed, resp: %s, err: %v", resp, err)
 	}
 

@@ -2,7 +2,6 @@ package utils
 
 import (
 	"crypto/tls"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -20,35 +19,32 @@ var (
 	}
 )
 
-func HttpRequest(host, method, param string) (int, []byte, error) {
-	var (
-		req *http.Request
-		err error
-	)
-
-	switch method {
-	case http.MethodGet:
-		req, err = http.NewRequest(
-			http.MethodGet,
-			host+"?"+param,
-			nil,
-		)
-
-	case http.MethodPost:
-		req, err = http.NewRequest(
-			http.MethodPost,
-			host,
-			strings.NewReader(param),
-		)
-
-	default:
-		return 0, nil, fmt.Errorf("not support method: %s", method)
-	}
-
+// HTTPGet  .
+func HTTPGet(host string, param string) (int, []byte, error) {
+	req, err := http.NewRequest(http.MethodGet, host+"?"+param, nil)
 	if err != nil {
 		return 0, nil, err
 	}
 
+	return HTTPRequest(req)
+}
+
+// HTTPPost  .
+func HTTPPost(host string, param string) (int, []byte, error) {
+	req, err := http.NewRequest(
+		http.MethodPost,
+		host,
+		strings.NewReader(param),
+	)
+	if err != nil {
+		return 0, nil, err
+	}
+
+	return HTTPRequest(req)
+}
+
+// HTTPRequest  .
+func HTTPRequest(req *http.Request) (int, []byte, error) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	resp, err := defaultClient.Do(req)

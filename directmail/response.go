@@ -1,6 +1,7 @@
 package directmail
 
+// Response  for directmail request.
 type Response struct {
-	RequestId string `json:"RequestId"`
-	EnvId     string `json:"EnvId"`
+	RequestID string `json:"RequestId"`
+	EnvID     string `json:"EnvId"`
 }
